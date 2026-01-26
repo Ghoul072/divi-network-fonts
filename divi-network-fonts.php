@@ -50,9 +50,10 @@ function divi_network_fonts_registry()
 add_filter('et_websafe_fonts', function ($fonts) {
 
     foreach (divi_network_fonts_registry() as $font) {
-        if (empty($font['label'])) continue;
+        $font_name = $font['label'] ?? $font['family'] ?? null;
+        if (empty($font_name)) continue;
 
-        $fonts[$font['label']] = [
+        $fonts[$font_name] = [
             'styles'        => ! empty($font['variable'])
                 ? '100,200,300,400,500,600,700,800,900'
                 : '400',
@@ -73,7 +74,8 @@ function divi_network_fonts_enqueue()
     $css = '';
 
     foreach (divi_network_fonts_registry() as $font) {
-        if (empty($font['file']) || empty($font['family'])) {
+        $font_name = $font['label'] ?? $font['family'] ?? null;
+        if (empty($font['file']) || empty($font_name)) {
             continue;
         }
 
@@ -82,7 +84,7 @@ function divi_network_fonts_enqueue()
         if (! empty($font['variable'])) {
             $css .= "
 @font-face {
-  font-family: '{$font['family']}';
+  font-family: '{$font_name}';
   src: url('{$url}');
   font-weight: 100 900;
   font-style: normal;
@@ -92,7 +94,7 @@ function divi_network_fonts_enqueue()
         } else {
             $css .= "
 @font-face {
-  font-family: '{$font['family']}';
+  font-family: '{$font_name}';
   src: url('{$url}');
   font-weight: 400;
   font-style: normal;
