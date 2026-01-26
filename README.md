@@ -136,6 +136,8 @@ The `fonts.json` file defines which fonts are available. Here's the schema:
 ]
 ```
 
+**Important:** Divi uses the font name from the registry when applying styles. Make sure your `label` matches the `family` if you set both fields so the selected font maps to the generated `@font-face` rule.
+
 ## Usage
 
 Once configured, your custom fonts will automatically appear in Divi's font selection dropdown under the standard fonts section. Select them just like any other font.
